@@ -13,9 +13,12 @@
     <div ng-app="MyApp" ng-controller="myAppController" class="container">
         <div class="page-header">
             <h1 style="color:darkgreen">ನಮಸ್ಕಾರ ಲೋಹಿತಾಕ್ಷಿ ಯವರಿಗೆ!!</h1>
-            <h1>ನಿಮಗಾಗಿ ಪ್ರಸ್ತುತಪಡಿಸುತ್ತಿದ್ದೇವೆ....ಪ್ರಜಾವಾಣಿ -- {{dayName}} {{currentDate}}</h1>
+            <h1>ನಿಮಗಾಗಿ ಪ್ರಸ್ತುತಪಡಿಸುತ್ತಿದ್ದೇವೆ....ಪ್ರಜಾವಾಣಿ </h1>
         </div>
-
+        <div>
+          <span class="btn btn-danger" ng-click="toggleScipDay()">{{changeDayName}}</span>
+          <h3 >{{dayName}} {{currentDate}}</h3>
+        </div>
         <div class="well well-lg">
             <div>
                 <h2 style="color: brown">ತಂತಿ ಪ್ರತಿ</h2>

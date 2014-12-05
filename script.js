@@ -5,7 +5,7 @@ angular.module('MyApp').controller('myAppController', ['$scope', function ($scop
     
     $scope.title = "Angular Application Template";
 
-    var getDaySubs = function() {
+    var getDaySubs = function(paperDate) {
         var day = paperDate.getDay();
         var pageIdAndMaxPage = {};
         switch (day) {
@@ -81,19 +81,38 @@ angular.module('MyApp').controller('myAppController', ['$scope', function ($scop
     var vm = $scope;
     var today = new Date();
     var tomorrow = new Date(today);
-    tomorrow.setDate(today.getDate()+1);
-    var isScipDay = false;
-    var paperDate = isScipDay ? tomorrow : today;
-    vm.currentYear = paperDate.getFullYear();
-    vm.currentMonth = ("0" + (paperDate.getMonth() + 1)).slice(-2);
-    vm.currentDay = ("0" + (paperDate.getDate())).slice(-2);
-    
-    vm.currentDate = paperDate.toDateString();
-    vm.mainPaperLinks = getPaperLinks(12,"a_0");
-    vm.subPaperLinks = getPaperLinks(getDaySubs().maxPage, getDaySubs().id);
-    vm.subPaperTitle = getDaySubs().title;
-    vm.dayName = getDaySubs().day;
+
+    tomorrow.setDate(today.getDate() + 1);
+    vm.changeDayName = getDaySubs(tomorrow).day;
+    vm.paperDate = today;
+
+    var loadPapers = function () {
+        vm.currentYear = vm.paperDate.getFullYear();
+        vm.currentMonth = ("0" + (vm.paperDate.getMonth() + 1)).slice(-2);
+        vm.currentDay = ("0" + (vm.paperDate.getDate())).slice(-2);
+
+        vm.currentDate = vm.paperDate.toDateString();
+        vm.mainPaperLinks = getPaperLinks(12, "a_0");
+        vm.subPaperLinks = getPaperLinks(getDaySubs(vm.paperDate).maxPage, getDaySubs(vm.paperDate).id);
+        vm.subPaperTitle = getDaySubs(vm.paperDate).title;
+        vm.dayName = getDaySubs(vm.paperDate).day;
+    };
+
+
+
+    vm.toggleScipDay = function () {
+        if (vm.paperDate === tomorrow) {
+            vm.changeDayName = getDaySubs(tomorrow).day;
+            vm.paperDate = today;
+        } else {
+            vm.changeDayName = getDaySubs(today).day;
+            vm.paperDate = tomorrow;
+        }
+        loadPapers();
+    };
     //http://prajavaniepaper.com/pdf/2014/11/04/20141104a_001100.pdf;
+
+    loadPapers();
 
 
 //getMainPaperLinks(12);
